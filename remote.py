@@ -39,7 +39,7 @@ HTML = """
         <button name="key" value="XF86AudioLowerVolume">&#x1F50A; Volume -</button><br><br>
         <button name="key" value="alt+F4">❌</button>
         <button name="key" value="Alt+Tab">🔄 Alt+Tab</button>
-        <button name="key" value="super+space">🌐</button>
+        <button name="key" value="win+space">🌐</button>
         <button name="key" value="space">Пробіл</button>
     </form>
 </body>
