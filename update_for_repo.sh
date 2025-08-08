@@ -1,24 +1,18 @@
 #!/bin/bash
+cd /home/user/documents/web-server || exit
 
-cd /home/user/web-serv || exit 1
+# Запам’ятай хеш поточного коміту
+OLD_COMMIT=$(git rev-parse HEAD)
 
-# Зберігаємо поточний хеш
-CURRENT_HASH=$(git rev-parse HEAD)
+# Оновлення з репозиторія
+git pull origin main
 
-# Отримуємо останні зміни з репозиторія
-git fetch origin
+# Якщо коміт оновився — перезапусти сервер
+NEW_COMMIT=$(git rev-parse HEAD)
 
-# Якщо є нові коміти — оновлюємо
-if [ "$CURRENT_HASH" != "$(git rev-parse origin/main)" ]; then
-    echo "Оновлення знайдено. Оновлюємо..."
-    git reset --hard origin/main
-
-    # Перезапуск сервера (Flask, systemd, runit, etc.)
-    # Якщо runit:
-    # sudo sv restart flask-server
-    # або якщо systemd:
-    sudo systemctl restart flask.service
-
+if [ "$OLD_COMMIT" != "$NEW_COMMIT" ]; then
+  echo "$(date): Updated. Restarting server..."
+  systemctl restart flask-remote
 else
-    echo "Немає оновлень."
+  echo "$(date): No changes."
 fi
