@@ -1,7 +1,10 @@
 from flask import Flask, request, render_template_string
+import os
 import subprocess
 
+
 app = Flask(__name__)
+os.environ["DISPLAY"] = ":0"
 
 # HTML пульта
 HTML = """
@@ -58,7 +61,7 @@ def remote():
         return render_template_string(HTML)
 
 if __name__ == "__main__":
-        app.run(host="0.0.0.0", port=8000)
+        app.run(host="0.0.0.0", port=8080)
 
 
-#fix X
+#fix display for x11
